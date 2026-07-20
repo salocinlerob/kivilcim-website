@@ -12,7 +12,6 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 overscroll-behavior: none;
-touch-action: manipulation;
 }
 
 @media (prefers-color-scheme: dark) {
