@@ -11,8 +11,8 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-   /* overscroll-behavior: none; */
-  /* touch-action: manipulation; */
+overscroll-behavior: none;
+touch-action: manipulation;
 }
 
 @media (prefers-color-scheme: dark) {
