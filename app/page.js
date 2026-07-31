@@ -101,25 +101,6 @@ export default function Home() {
       .catch(() => {});
   }, []);
 
-  // Mouse wheel / trackpad scroll support (drag-to-pan alone misses this input)
-  useEffect(() => {
-    const el = viewportRef.current;
-    if (!el) return;
-
-    function handleWheel(e) {
-      e.preventDefault();
-      stopMomentum();
-      const { w: cw, h: ch } = cRef.current;
-      const vw = window.innerWidth, vh = window.innerHeight;
-      const nx = Math.max(-(cw - vw), Math.min(0, offRef.current.x - e.deltaX));
-      const ny = Math.max(-(ch - vh), Math.min(0, offRef.current.y - e.deltaY));
-      offRef.current = { x: nx, y: ny };
-      setOff({ x: nx, y: ny });
-    }
-
-    el.addEventListener('wheel', handleWheel, { passive: false });
-    return () => el.removeEventListener('wheel', handleWheel);
-  }, []);
 
   useEffect(() => {
     if (!sessions.length) return;
@@ -161,7 +142,29 @@ export default function Home() {
     }
     rafRef.current = requestAnimationFrame(tick);
   }
+  
+function handleWheel(e) {
+  e.preventDefault();
+  stopMomentum();
 
+  const { w: cw, h: ch } = cRef.current;
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  const nx = Math.max(
+    -(cw - vw),
+    Math.min(0, offRef.current.x - e.deltaX)
+  );
+
+  const ny = Math.max(
+    -(ch - vh),
+    Math.min(0, offRef.current.y - e.deltaY)
+  );
+
+  offRef.current = { x: nx, y: ny };
+  setOff({ x: nx, y: ny });
+}
+  
   function onPointerDown(e) {
     if (e.button !== 0) return;
     stopMomentum();
@@ -193,10 +196,11 @@ export default function Home() {
   }
 
   return (
-    <main
+<main
       ref={viewportRef}
       className={styles.viewport}
       style={{ cursor: dragging ? 'grabbing' : 'default' }}
+      onWheel={handleWheel}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
