@@ -164,6 +164,38 @@ function handleWheel(e) {
   offRef.current = { x: nx, y: ny };
   setOff({ x: nx, y: ny });
 }
+
+
+  
+  /* temp */
+function handleWheel(e) {
+  console.log('WHEEL EVENT!', e.target);
+
+  e.preventDefault();
+  stopMomentum();
+
+  const { w: cw, h: ch } = cRef.current;
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  const nx = Math.max(
+    -(cw - vw),
+    Math.min(0, offRef.current.x - e.deltaX)
+  );
+
+  const ny = Math.max(
+    -(ch - vh),
+    Math.min(0, offRef.current.y - e.deltaY)
+  );
+
+  offRef.current = { x: nx, y: ny };
+  setOff({ x: nx, y: ny });
+}
+  
+  /* temp */
+
+
+  
   
   function onPointerDown(e) {
     if (e.button !== 0) return;
