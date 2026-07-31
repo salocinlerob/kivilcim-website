@@ -129,7 +129,7 @@
   position: absolute;
   top: 0;
   left: 0;
-/*  will-change: transform; */
+  will-change: transform;
   z-index: 1;
 }
 
